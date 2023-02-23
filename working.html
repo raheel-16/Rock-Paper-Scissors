@@ -3,9 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
-
+    <h1>Rock Paper Scissors</h1>
+    <p>Make your selection:</p>
+    <button id="rock">Rock</button>
+    <button id="paper">Paper</button>
+    <button id="scissors">Scissors</button>
+    <div id="result"></div>
+    
+    
     <script>
       const options = ["Rock", "Paper", "Scissors"];
 
@@ -35,26 +43,49 @@
       let playerScore = 0;
       let computerScore = 0;
 
-
-        function game() {
-        let playerScore = 0;
-        let computerScore = 0;
-        for (let i = 0; i < 5; i++) {
-            let playerSelection = prompt('Pick Rock, Paper, or Scissors');
-            const computerSelection = getComputerChoice();
-            const roundResult = playRound(playerSelection, computerSelection);
-            console.log(`Round ${i + 1}: ${roundResult}`);
-            if (roundResult.startsWith("You Win")) {
-                playerScore++;
-            } else if (roundResult.startsWith("You Lose")) {
-                computerScore++;
-            }
-            else {};
+      function game(playerSelection) {
+        const computerSelection = getComputerChoice();
+        const roundResult = playRound(playerSelection, computerSelection);
+        if (roundResult.startsWith("You Win")) {
+          playerScore++;
+        } else if (roundResult.startsWith("You Lose")) {
+          computerScore++;
         }
-        console.log(`Final Score: Player ${playerScore} - ${computerScore} Computer`);
-    }
+        const resultElement = document.getElementById("result");
+        resultElement.textContent =
+          "You chose " +
+          playerSelection +
+          ", the computer chose " +
+          computerSelection +
+          ". " +
+          roundResult;
+        if (playerScore + computerScore == 5) {
+          let finalResult =
+            playerScore > computerScore
+              ? "You win!"
+              : playerScore < computerScore
+              ? "You lose!"
+              : "It's a tie!";
+          finalResult +=
+            " Final Score: Your: " +
+            playerScore +
+            " - " +
+            computerScore +
+            " Computer";
+          alert(finalResult);
+          
+        }
         
-    game();
+      }
+      document.getElementById("rock").addEventListener("click", () => {
+        game("Rock");
+      });
+      document.getElementById("paper").addEventListener("click", () => {
+        game("Paper");
+      });
+      document.getElementById("scissors").addEventListener("click", () => {
+        game("Scissors");
+      });
     </script>
   </body>
 </html>
